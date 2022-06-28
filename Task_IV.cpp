@@ -5,6 +5,8 @@
 #include <string>  
 #include <stdio.h>
 
+
+
 struct berResults
 {
     double tot;
@@ -45,6 +47,56 @@ void closeLog(void)
     logFile.close();
 }
 
+uint8_t hammingDistance(uint8_t n1, uint8_t n2);
+void createFile1(const std::string name, const int count, const char value);
+berResults calculateBer(std::string fpath1, std::string fpath2);
+void printResult(berResults results);
+
+int main(int argc, char** argv)
+{
+    std::string fpath1;
+    std::string fpath2;
+
+    berResults results;
+
+    openLog("log.log");
+    if (argc != 3)  //argumenty niepoprawne
+    {
+
+        saveLog("Nie podano sciezek plikow");
+        saveLog("Tworze pliki testowe");
+        //test 1
+        createFile1("test1_file1.bin", 100, 0x55);
+        createFile1("test1_file2.bin", 100, 0x55);
+        //test 1
+
+        //test 2
+        createFile1("test2_file1.bin", 100, 0x55);
+        createFile1("test2_file2.bin", 98, 0x55);
+        //test 2
+        //test 2
+
+        //test 3
+        createFile1("test3_file1.bin", 400000000, 0x55);
+        createFile1("test3_file2.bin", 400000000, 0x50);
+        //test 3
+
+        saveLog("Pliki zostaly stworzone");
+    }
+    else //argumenty poprawne
+    {
+        fpath1 = argv[1];
+        fpath2 = argv[2];
+
+        saveLog("Przetwarzanie plików");
+        results = calculateBer(fpath1, fpath2);
+        printResult(results);
+    }
+
+    closeLog();
+    return 0;
+}
+
 uint8_t hammingDistance(uint8_t n1, uint8_t n2)
 {
     uint8_t x = n1 ^ n2; // XOR
@@ -83,7 +135,6 @@ void createFile1(const std::string name, const int count, const char value)
 
     f.close();
 }
-
 
 berResults calculateBer(std::string fpath1, std::string fpath2)
 {
