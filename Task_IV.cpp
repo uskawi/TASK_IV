@@ -38,3 +38,9 @@ void openLog(std::string fileName)
     }
     saveLog("Plik log otwarty");
 }
+
+void closeLog(void)
+{
+    saveLog("Plik log zamkniety");
+    logFile.close();
+}
