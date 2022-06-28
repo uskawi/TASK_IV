@@ -56,3 +56,30 @@ uint8_t hammingDistance(uint8_t n1, uint8_t n2)
     }
     return setBits;
 }
+
+void createFile1(const std::string name, const int count, const char value)
+{
+    std::fstream f;
+    f.open(name.c_str(), std::ios::binary | std::ios::out);
+    unsigned char num1(0xEE);
+    unsigned char num2(0x1E);
+
+    if (count == 98)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            f.write((char*)&value, 1);
+        }
+        f.write((char*)&num1, 1);
+        f.write((char*)&num2, 1);
+    }
+    else
+    {
+        for (int i = 0; i < count; i++)
+        {
+            f.write((char*)&value, 1);
+        }
+    };
+
+    f.close();
+}
